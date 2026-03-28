@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: #0d0d0f;
+      font-family: 'DM Sans', sans-serif;
+      color: #e8e4dc;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper {
+      max-width: 580px;
+      margin: 40px auto;
+      background: #13131a;
+      border: 1px solid #2a2a38;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 48px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(99,102,241,0.18) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(236,72,153,0.12) 0%, transparent 50%);
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+
+    .logo-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .header-headline {
+      position: relative;
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .header-headline em {
+      font-style: italic;
+      color: #a78bfa;
+    }
+
+    .header-sub {
+      position: relative;
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── BODY ── */
+    .body {
+      padding: 40px 48px;
+    }
+
+    .greeting {
+      font-size: 15px;
+      color: #b0aac4;
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .greeting strong {
+      color: #e8e4dc;
+      font-weight: 500;
+    }
+
+    /* ── CREDENTIALS CARD ── */
+    .credentials {
+      background: #1e1e2e;
+      border: 1px solid #2e2e45;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+
+    .credentials-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 18px;
+    }
+
+    .cred-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid #252535;
+    }
+
+    .cred-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .cred-row:first-of-type {
+      padding-top: 0;
+    }
+
+    .cred-icon {
+      width: 32px;
+      height: 32px;
+      background: #252535;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .cred-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: #a78bfa;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cred-info {}
+
+    .cred-key {
+      font-size: 11px;
+      font-weight: 500;
+      color: #6b6880;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .cred-value {
+      font-size: 14px;
+      color: #e8e4dc;
+      word-break: break-all;
+      font-weight: 400;
+    }
+
+    .cred-value.mono {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: #c4b5fd;
+    }
+
+    /* ── CTA ── */
+    .cta-wrapper {
+      text-align: center;
+      margin: 32px 0 24px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: #fff !important;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 14px 40px;
+      border-radius: 50px;
+      transition: opacity 0.2s;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #4e4a60;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .hint a {
+      color: #6366f1;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    /* ── SECURITY NOTE ── */
+    .security-note {
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 28px;
+    }
+
+    .security-note svg {
+      width: 16px;
+      height: 16px;
+      stroke: #6366f1;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .security-note p {
+      font-size: 12px;
+      color: #7b7592;
+      line-height: 1.65;
+    }
+
+    .security-note strong {
+      color: #a78bfa;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid #1e1e2e;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: #3d3a52;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: #3d3a52;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo-row">
+        <div class="logo-icon">
+          <!-- Chat bubble icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+          </svg>
+        </div>
+        <span class="logo-name">ZYNC</span>
+      </div>
+      <h1 class="header-headline">Welcome aboard,<br/><em>{{name}}</em></h1>
+      <p class="header-sub">Your account is ready — let's start chatting.</p>
+    </div>
+
+    <!-- BODY -->
+    <div class="body">
+
+      <p class="greeting">
+        Hey<strong> {{name}}</strong>, glad to have you with us! Your account has been created
+        successfully. You're all set — click the button below to jump right in.
+      </p>
+
+      <!-- CREDENTIALS -->
+      <div class="credentials">
+        <div class="credentials-label">Your Account</div>
+
+        <div class="cred-row">
+          <div class="cred-icon">
+            <!-- User avatar -->
+            <img src="{{avatarUrl}}" alt="User Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+          </div>
+          <div class="cred-info">
+            <div class="cred-key">Registered Email</div>
+            <div class="cred-value">{{email}}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-wrapper">
+        <a href="{{loginLink}}" class="cta-btn">Login to ZYNC →</a>
+      </div>
+
+      <p class="hint">
+        Button not working? Copy &amp; paste this link:<br/>
+        <a href="{{loginLink}}">{{loginLink}}</a>
+      </p>
+
+      <!-- WELCOME NOTE -->
+      <div class="security-note">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <p>
+          <strong>You're in good hands.</strong> ZYNC keeps your conversations private and secure.
+          If you ever need help, our support team is just a message away.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span class="footer-copy">© 2026 ZYNC. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
