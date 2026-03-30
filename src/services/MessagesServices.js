@@ -79,12 +79,12 @@ export const getMessages = async (req, res) => {
       .populate("sender", "_id username avatarUrl isOnline ");
 
     // Store messages in Redis cache with an expiration time of 1 hour
-    await redis.setEx(cachedKey, 60, JSON.stringify({
-      messages,
-      page,
-      limit,
-      totalMessages: messages.length,
-    }));
+    // await redis.setEx(cachedKey, 60, JSON.stringify({
+    //   messages,
+    //   page,
+    //   limit,
+    //   totalMessages: messages.length,
+    // }));
 
     res
       .status(200)
