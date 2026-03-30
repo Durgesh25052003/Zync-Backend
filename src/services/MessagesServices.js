@@ -59,14 +59,14 @@ export const getMessages = async (req, res) => {
     const room = await Room.findOne({ _id: roomId });
     const members = room.members;
     //redis implementation
-    const chatKey = members.sort().join("_");
-    const cachedKey = `chat-${chatKey}:messages`;
-    const cachedMessages = await redis.get(cachedKey);
-    console.log(JSON.parse(cachedMessages));
-    if (cachedMessages) {
-      console.log("Messages fetched from cache ✅✅");
-      return res.status(200).json(JSON.parse(cachedMessages));
-    }
+    // const chatKey = members.sort().join("_");
+    // const cachedKey = `chat-${chatKey}:messages`;
+    // const cachedMessages = await redis.get(cachedKey);
+    // console.log(JSON.parse(cachedMessages));
+    // if (cachedMessages) {
+    //   console.log("Messages fetched from cache ✅✅");
+    //   return res.status(200).json(JSON.parse(cachedMessages));
+    // }
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const skip = (page - 1) * limit;
