@@ -1,4 +1,5 @@
 import { io } from "../../server.js";
+import redis from "../config/redis.js";
 import Message from "../models/Messages.js";
 import Room from "../models/Room.js";
 
@@ -12,6 +13,7 @@ export const sendMessages = async (req, res) => {
     //Is that room exists or not
     const isRoomExists = await Room.findOne({ _id: roomId });
     console.log(isRoomExists);
+    const members = isRoomExists.members;
     if (!isRoomExists) {
       return res.status(404).json({ message: "Room not found" });
     }
@@ -25,6 +27,11 @@ export const sendMessages = async (req, res) => {
         .json({ message: "You are not a member of this room" });
     }
     const sender = req.user._id;
+
+    const chatKey = members.sort().join("_");
+    const cachedKey = `chat-${chatKey}:messages`;
+    // Invalidate the cache for the room's messages
+    await redis.del(cachedKey);
     //Persist the message in database
     const message = await Message.create({
       room: roomId,
@@ -50,15 +57,35 @@ export const getMessages = async (req, res) => {
     const roomId = req.params.roomId;
     console.log(roomId);
     const room = await Room.findOne({ _id: roomId });
+    const members = room.members;
+    //redis implementation
+    const chatKey = members.sort().join("_");
+    const cachedKey = `chat-${chatKey}:messages`;
+    const cachedMessages = await redis.get(cachedKey);
+    console.log(JSON.parse(cachedMessages));
+    if (cachedMessages) {
+      console.log("Messages fetched from cache ✅✅");
+      return res.status(200).json(JSON.parse(cachedMessages));
+    }
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const skip = (page - 1) * limit;
     //Logic to get messages for the roomId
+    console.log("messages fetched from database ✅");
     const messages = await Message.find({ room })
       .sort({ createdAt: 1 })
       .skip(skip)
       .limit(limit)
       .populate("sender", "_id username avatarUrl isOnline ");
+
+    // Store messages in Redis cache with an expiration time of 1 hour
+    await redis.setEx(cachedKey, 60, JSON.stringify({
+      messages,
+      page,
+      limit,
+      totalMessages: messages.length,
+    }));
+
     res
       .status(200)
       .json({ messages, page, limit, totalMessages: messages.length });

@@ -17,3 +17,8 @@ export const updateGC=async(req,res)=>{
     console.log("Updating GC...");
     return RoomServices.uploadNewGcData(req,res);
 }
+
+
+export const getRoom=async(req,res)=>{
+    return RoomServices.fetchRoom(req,res);
+}

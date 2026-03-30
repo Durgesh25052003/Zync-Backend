@@ -58,6 +58,21 @@ export const DMRoom = async (req, res) => {
         message: "User ID is required to create DM Room",
       });
     }
+
+    const existingDM = await Room.findOne({
+      isDM: true,
+      members: { $all: [req.user._id, userId] },
+    });
+
+    if (existingDM) {
+      return res.status(200).json({
+        success: true,
+        alreafyExists: true,
+        message: "DM Room already exists",
+        room: existingDM,
+      });
+    }
+
     const roomName = `DM-${req.user._id}-${userId}`;
     console.log("Creating DM Room with name:", roomName);
     console.log(typeof roomName);
@@ -186,3 +201,29 @@ export const uploadNewGcData = async (req, res) => {
 //     });
 //   }
 // };
+
+export const fetchRoom = async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+    const room = await Room.findOne({
+      _id: roomId,
+    });
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Room not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Room fetched successfully",
+      room,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while fetching room",
+      error: error.message,
+    });
+  }
+};

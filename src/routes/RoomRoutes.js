@@ -4,6 +4,7 @@ import {
   createDMRoom,
   getAllRooms,
   updateGC,
+  getRoom,
 } from "../controllers/RoomController.js";
 import { protectUser } from "../controllers/AuthController.js";
 import upload from "../utils/multer.js";
@@ -18,5 +19,6 @@ RoomRouter.patch(
   upload.single("roomImage"),
   updateGC,
 );
+RoomRouter.get("/getRoom/:roomId", protectUser, getRoom);
 
 export default RoomRouter;
