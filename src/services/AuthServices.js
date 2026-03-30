@@ -39,7 +39,7 @@ export const register = async (req, res, next) => {
     });
 
     if (user) {
-      const loginLink = "http://localhost:3000/api/v1/user/login";
+      const loginLink = "http://localhost:5173/";
       console.log("🏎️✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨");
       const emailService = new Email();
       await emailService.SendMail(

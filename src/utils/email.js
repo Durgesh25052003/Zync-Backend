@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import { Resend } from "resend";
 
 dotenv.config({ quiet: true });
 
@@ -11,21 +12,13 @@ const __dirname = path.dirname(filename);
 
 class Email {
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      service: "gmail",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
+    this.resend = new Resend(process.env.RESEND_API_KEY);
   }
 
-  async SendMail(to, subject, name, email, loginLink,avatarUrl) {
+  async SendMail(to, subject, name, email, loginLink, avatarUrl) {
     const emailTemplate = fs.readFileSync(
       path.join(__dirname, "welcomeEmail.html"),
-      "utf-8"
+      "utf-8",
     );
     const customizedEmail = emailTemplate
       .replace("{{name}}", name)
@@ -35,14 +28,14 @@ class Email {
       .replace("{{avatarUrl}}", avatarUrl);
 
     const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: to,
+      from: "Zync <onboarding@resend.dev>",
+      to: [to],
       subject: subject,
       html: customizedEmail,
     };
 
     try {
-      await this.transporter.sendMail(mailOptions);
+      await this.resend.emails.send(mailOptions);
       console.log("Email sent successfully");
     } catch (error) {
       console.error("Error sending email:", error);
