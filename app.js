@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://zync-pi.vercel.app/",
+    origin: "https://zync-pi.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
