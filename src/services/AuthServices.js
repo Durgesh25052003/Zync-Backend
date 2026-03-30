@@ -100,7 +100,7 @@ export const login = async (req, res, next) => {
 
     const cookieOptions = {
       httpOnly: true,
-      samesite: "lax",
+      sameSite: "none",
       secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     };
