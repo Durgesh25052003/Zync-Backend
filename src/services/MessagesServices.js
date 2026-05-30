@@ -58,7 +58,7 @@ export const getMessages = async (req, res) => {
     console.log(roomId);
     const room = await Room.findOne({ _id: roomId });
     const members = room.members;
-    //redis implementation
+   //redis implementation
     const chatKey = members.sort().join("_");
     const cachedKey = `chat-${chatKey}:messages`;
     const cachedMessages = await redis.get(cachedKey);
@@ -78,7 +78,7 @@ export const getMessages = async (req, res) => {
       .limit(limit)
       .populate("sender", "_id username avatarUrl isOnline ");
 
-    // Store messages in Redis cache with an expiration time of 1 hour
+    //Store messages in Redis cache with an expiration time of 1 hour
     await redis.setEx(cachedKey, 60, JSON.stringify({
       messages,
       page,

@@ -1,5 +1,7 @@
 import { createClient } from "redis";
 
+console.log("⭐⭐",process.env.REDIS_HOST)
+
 const redis = createClient({
   url:process.env.REDIS_HOST,
 });
