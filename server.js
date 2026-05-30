@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: "https://zync-frontend-o1ijfb722-durgesh25052003s-projects.vercel.app",
+    origin: "https://zync-frontend-three.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
