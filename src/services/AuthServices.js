@@ -121,7 +121,7 @@ export const login = async (req, res, next) => {
 
 export const protect = async (req, res, next) => {
   try {
-    console.log(req.cookies,"⭐⭐");
+    console.log(req.cookies, req.cookies.token);
     if (!req.cookies || !req.cookies.token) {
       return res.status(401).json({
         success: false,
