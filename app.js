@@ -14,7 +14,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
-);
+);  
 
 app.use(express.json());
 app.use(cookieParser());
