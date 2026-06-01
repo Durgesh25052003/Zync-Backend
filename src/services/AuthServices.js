@@ -105,16 +105,10 @@ export const login = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     };
 
-    if (process.env.NODE_ENV === "production") {
-      cookieOptions.samesite = "none";
-      cookieOptions.secure = true;
-    }
-
     res.status(200).cookie("token", token, cookieOptions).json({
       success: true,
       message: "User Logged In Successfully",
-      user: userData,
-      token,
+      user: userData
     });
   } catch (error) {
     return res.status(500).json({
@@ -127,6 +121,7 @@ export const login = async (req, res, next) => {
 
 export const protect = async (req, res, next) => {
   try {
+    console.log(req.cookies);
     if (!req.cookies || !req.cookies.token) {
       return res.status(401).json({
         success: false,
