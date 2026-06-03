@@ -104,18 +104,20 @@ export const DMRoom = async (req, res) => {
 export const getRooms = async (req, res) => {
   try {
     const userId = req.user._id;
-    const rooms = await Room.find({ members: userId })
-      .populate("members", "_id username email avatarUrl isOnline") // added isOnline
+    console.log("⭐⭐⭐");
+    const rooms = await Room.find({ members: { $in: [userId] } })
+      .populate("members", "_id username email avatarUrl isOnline") 
       .populate(
-        "lastMessage", // added this
+        "lastMessage", 
         "content createdAt",
       );
+      console.log("⭐⭐")
     const roomsMod = rooms.map((room) => {
       if (room.isDM) {
         const otherUser = room.members.find(
           (member) => member._id.toString() !== userId.toString(), // cleaner find
         );
-
+      console.log("🌟🌟")
         return {
           roomId: room._id,
           isDM: true,
@@ -129,7 +131,7 @@ export const getRooms = async (req, res) => {
           lastMessageTime: room.lastMessage?.createdAt ?? room.createdAt, // added
         };
       }
-
+      console.log("🌟🌟🌟")
       return {
         roomId: room._id,
         isDM: false,
