@@ -105,7 +105,7 @@ export const getRooms = async (req, res) => {
   try {
     const userId = req.user._id;
     console.log("⭐⭐⭐");
-    const rooms = await Room.find({ members: userId })
+    const rooms = await Room.find({ members: { $in: [userId] } })
       .populate("members", "_id username email avatarUrl isOnline") 
       .populate(
         "lastMessage", 
