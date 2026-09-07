@@ -1,16 +1,24 @@
-import { createClient } from "redis";
+import { Redis } from "@upstash/redis";
 
-console.log("⭐⭐",process.env.REDIS_HOST)
+const redis = Redis.fromEnv();
 
-const redis = createClient({
-  url:process.env.REDIS_HOST,
-});
+async function checkRedisConnection() {
+  try {
+    const result = await redis.ping();
 
-redis.on("error", (err) => {
-  console.log("Redis Client Error", err);
-});
+    if (result === "PONG") {
+      console.log("✅ Redis/Upstash connected");
+      return true;
+    }
 
-await redis.connect();
-console.log("Connected to Redis successfully!");
+    console.log("⚠️ Redis responded unexpectedly:", result);
+    return false;
+  } catch (error) {
+    console.error("❌ Redis/Upstash connection failed:", error.message);
+    return false;
+  }
+}
+
+checkRedisConnection();
 
 export default redis;
